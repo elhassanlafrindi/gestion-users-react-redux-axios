@@ -12,6 +12,16 @@ export const getUserlistAction = createAsyncThunk(
     return response.data;
   }
 );
+export const setuserAction = createAsyncThunk(
+  "user/setUser",
+  async (form: Iuser, { rejectWithValue }) => {
+    try {
+      return await setuser(form);
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
 const UserSlice = createSlice({
   name: "user",
   initialState: initialState,
@@ -25,6 +35,16 @@ const UserSlice = createSlice({
         state.listStatus = ApiStatus.ideal;
       }),
       builder.addCase(getUserlistAction.rejected, (state) => {
+        state.listStatus = ApiStatus.error;
+      }),
+      builder.addCase(setuserAction.pending, (state) => {
+        state.listStatus = ApiStatus.loading;
+      }),
+      builder.addCase(setuserAction.fulfilled, (state, action: any) => {
+        state.listStatus = ApiStatus.ideal;
+        state.list.push(action.payload);
+      }),
+      builder.addCase(setuserAction.rejected, (state) => {
         state.listStatus = ApiStatus.error;
       });
   },
