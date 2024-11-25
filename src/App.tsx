@@ -7,7 +7,7 @@ import {
 import Layouts from "./module/Layouts";
 import UserList from "./module/user/UserList";
 import UserForm from "./module/user/UserForm";
-const route = createBrowserRouter(
+const routes = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layouts />}>
       <Route path="/list" element={<UserList />} />
@@ -16,7 +16,7 @@ const route = createBrowserRouter(
   )
 );
 function App() {
-  return <RouterProvider router={route} />;
+  return <RouterProvider router={routes} />;
 }
 
 export default App;
